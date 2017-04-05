@@ -3,6 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class eatPeople : MonoBehaviour {
+	public Image damageScreen;//an image that fills the screen to indicate that the player just gets damaged
+	Color flashColor = new Color(255f, 255f, 255f, 1f);//the damage screen will appear on the screen after its color is turned to this
+	float flashSpeed = 5f;
+	public bool damaged=false;
 	public timeSlider slider;
 	public Slider time;
 	dialogue box;
@@ -28,13 +32,20 @@ public class eatPeople : MonoBehaviour {
 	public GameObject detect;
 	easyDetection detector;
 
+
+
+	public AudioSource ate;
+
+	public AudioSource scream;
+
 	// Use this for initialization
 	void Start () {
 		//gameover = endControl.GetComponent<EndGame> ();
 		box = dialog.GetComponent<dialogue> ();
 		detector = detect.GetComponent<easyDetection> ();
 		eatrush = lostcontrol.GetComponent<rush> ();
-	
+		ate = GetComponent<AudioSource> ();
+		scream = GetComponent<AudioSource> ();
 
 	}
 
@@ -44,8 +55,10 @@ public class eatPeople : MonoBehaviour {
 				box.dialogLines = EatFrienddialogueLines;
 				box.currentLine = 0;
 				box.ShowDialogue();
+				scream.Play ();
 
 				box.over = true;
+
 
 
 
@@ -59,12 +72,16 @@ public class eatPeople : MonoBehaviour {
 			Destroy (other.gameObject);
 			Debug.Log ("haha");
 			box.ate = true;
+			ate.Play ();
+			scream.Play ();
+			damaged = true;
 
 			if (detector.detected&&!box.dialogActive) {				
 				box.dialogLines = DetecteddialogueLines;
 				box.currentLine = 0;
 				box.ShowDialogue();
 				box.over = true;
+				scream.Play ();
 
 
 			}
@@ -86,6 +103,20 @@ public class eatPeople : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (damaged)
+		{
+			//after the player gets hit by the enemy, the blood image whill appears and the audioClip "getHit" will be played
+			damageScreen.color = flashColor;
+
+		}
+		else
+		{
+			damageScreen.color = Color.Lerp(damageScreen.color, Color.clear, flashSpeed * flashSpeed * Time.deltaTime);
+		}
+
+		damaged = false; //to make sure that the damage screen only appears once after each damage
+
+
 		check = GameObject.FindGameObjectsWithTag("friend");
 		strangers = GameObject.FindGameObjectsWithTag ("stranger");
 
@@ -97,6 +128,7 @@ public class eatPeople : MonoBehaviour {
 			box.currentLine = 0;
 			box.ShowDialogue();
 			box.over = true;
+			scream.Play ();
 	
 			//gameOver.SetActive (true);
 		}
@@ -107,6 +139,7 @@ public class eatPeople : MonoBehaviour {
 			box.currentLine = 0;
 			box.ShowDialogue ();
 			box.over = true;
+			scream.Play ();
 		}
 
 

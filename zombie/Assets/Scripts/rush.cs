@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class rush : MonoBehaviour {
 	NavMeshAgent nav;
 //	dialogue box;
+	public AudioSource eat;
+	public AudioSource scream;
 
 	public  bool gameOverOne=false;
 
@@ -17,6 +19,9 @@ public class rush : MonoBehaviour {
 	public List<GameObject> friends = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
+		eat = GetComponent<AudioSource> ();
+		scream = GetComponent<AudioSource> ();
+
 		nav = GetComponentInParent<NavMeshAgent> ();
 //		box = dialog.GetComponent<dialogue> ();
 		GameObject[] friendsStatic = GameObject.FindGameObjectsWithTag("friend");
@@ -40,6 +45,8 @@ public class rush : MonoBehaviour {
 			if(Vector3.Distance(friend.transform.position,gameObject.transform.position)<=1f){
 				//friend.SetActive (false);
 				friends.Remove (friend);
+				eat.Play ();
+				scream.Play ();
 				Destroy (friend);
 				Debug.Log ("nearby");
 				//Destroy (friend.gameObject);

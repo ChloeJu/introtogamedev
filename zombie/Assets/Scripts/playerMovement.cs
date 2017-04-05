@@ -5,11 +5,13 @@ public class playerMovement : MonoBehaviour {
 
 	public Transform target;
 
+	Animator anim;
     public float speed = 10;
     Rigidbody rb;
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+		anim = GetComponent<Animator> ();
 
 
 	}
@@ -34,6 +36,13 @@ public class playerMovement : MonoBehaviour {
 		if(Input.GetAxisRaw("Vertical")>0.5f||Input.GetAxisRaw("Vertical")<-0.5f){
 			transform.Translate(new Vector3(0f,0f,Input.GetAxisRaw("Vertical")*speed*Time.deltaTime));
 		}
+
+
+
+
+		anim.SetFloat ("vertical", Input.GetAxisRaw ("Vertical"));
+		//if(Input.GetAxisRaw("Vertical")>0f)
+		//	Debug.Log("today is the day");
 
 
 
