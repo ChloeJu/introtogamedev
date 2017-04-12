@@ -6,7 +6,7 @@ public class randomMovement : MonoBehaviour {
 	public float timer;
 	public int waitNewTarget;
 	public float speed;
-	public NavMeshAgent nav;
+	public UnityEngine.AI.NavMeshAgent nav;
 	public float range = 100;
 	public Vector3 target;
 	turnAround ta;
@@ -14,7 +14,7 @@ public class randomMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		nav = gameObject.GetComponent<NavMeshAgent> ();	
+		nav = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent> ();	
 		ta = GetComponentInChildren<turnAround> ();
 	}
 

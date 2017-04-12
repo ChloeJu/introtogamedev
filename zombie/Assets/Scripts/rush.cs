@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class rush : MonoBehaviour {
-	NavMeshAgent nav;
+	UnityEngine.AI.NavMeshAgent nav;
 //	dialogue box;
 	public AudioSource eat;
 	public AudioSource scream;
@@ -22,7 +22,7 @@ public class rush : MonoBehaviour {
 		eat = GetComponent<AudioSource> ();
 		scream = GetComponent<AudioSource> ();
 
-		nav = GetComponentInParent<NavMeshAgent> ();
+		nav = GetComponentInParent<UnityEngine.AI.NavMeshAgent> ();
 //		box = dialog.GetComponent<dialogue> ();
 		GameObject[] friendsStatic = GameObject.FindGameObjectsWithTag("friend");
 
